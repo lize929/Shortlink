@@ -1,0 +1,58 @@
+server:
+  port: 8001
+
+spring:
+#  security:
+#    jwt:
+#      key: assdfwsfwfw
+#      expire: 7
+#    filter:
+#      order: -100
+  datasource:
+    # ShardingSphere 对 Driver 自定义，实现分库分表等隐藏逻辑
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    # ShardingSphere 配置文件路径
+    url: jdbc:shardingsphere:classpath:shardingsphere-config.yaml
+
+#  datasource:
+#    username: root
+#    password: 1234567890
+#    url: jdbc:mysql://127.0.0.1:3306/link?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      connection-test-query: select 1
+#      connection-timeout: 20000
+#      idle-timeout: 300000
+#      maximum-pool-size: 5
+#      minimum-idle: 5
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+
+  short-link:
+    domain:
+      default: lamze:8001
+    stats:
+      locale:
+        amap-key: cf0dca5b2324679c55976b2c9c5c3d97
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+
+goto-domain:
+  white-list:
+    enable: false
+    names: '拿个offer,知乎,掘金,博客园'
+    details:
+      - nageoffer.com
+      - zhihu.com
+      - juejin.cn
+      - cnblogs.com
