@@ -36,7 +36,7 @@ public class RabbitConfiguration {
         MessageListenerAdapter listenerAdapter = new MessageListenerAdapter(rabbitShortLinkStatsSaveConsumer, "onMessage");
         container.setMessageListener(listenerAdapter);
         container.setConcurrentConsumers(Runtime.getRuntime().availableProcessors());
-        container.setMaxConcurrentConsumers(Runtime.getRuntime().availableProcessors() / 2);
+        container.setMaxConcurrentConsumers(Runtime.getRuntime().availableProcessors() * 2);
         container.setAutoStartup(true);
         return container;
     }
