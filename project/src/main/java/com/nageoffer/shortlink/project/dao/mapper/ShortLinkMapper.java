@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.nageoffer.shortlink.project.dao.entity.ShortLinkDO;
 import com.nageoffer.shortlink.project.dto.req.ShortLinkPageReqDTO;
+import com.nageoffer.shortlink.project.dto.req.ShortLinkRecycleBinPageReqDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -32,4 +33,6 @@ public interface ShortLinkMapper extends BaseMapper<ShortLinkDO> {
      * 分页统计短链接pv,uv,uip这些内容
      */
     IPage<ShortLinkDO> pageLink(ShortLinkPageReqDTO requestParam);
+
+    IPage<ShortLinkDO> recycleBinPageLink(ShortLinkRecycleBinPageReqDTO requestParam);
 }
