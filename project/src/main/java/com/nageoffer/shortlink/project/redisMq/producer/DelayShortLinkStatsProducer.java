@@ -1,4 +1,4 @@
-package com.nageoffer.shortlink.project.mq.producer;
+package com.nageoffer.shortlink.project.redisMq.producer;
 
 
 import com.nageoffer.shortlink.project.dto.biz.ShortLinkStatsRecordDTO;

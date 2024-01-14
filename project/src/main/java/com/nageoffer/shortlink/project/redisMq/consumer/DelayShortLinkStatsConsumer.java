@@ -1,4 +1,4 @@
-package com.nageoffer.shortlink.project.mq.consumer;
+package com.nageoffer.shortlink.project.redisMq.consumer;
 
 import com.nageoffer.shortlink.project.dto.biz.ShortLinkStatsRecordDTO;
 import com.nageoffer.shortlink.project.service.ShortLinkService;
@@ -27,7 +27,6 @@ public class DelayShortLinkStatsConsumer implements InitializingBean {
      */
 
     public void onMessage() {
-
         Executors.newSingleThreadExecutor(
                 runnable -> {
                     Thread thread = new Thread(runnable);
