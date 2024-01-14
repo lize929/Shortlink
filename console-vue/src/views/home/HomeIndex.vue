@@ -23,14 +23,14 @@
                 class="link-span"
                 style="text-decoration: none"
                 target="_blank"
-                href="https://nageoffer.com/shortlink/video/"
-            >🔥视频教程</a
+                href="https://space.bilibili.com/297982476"
+            >🔥个人主页</a
             >
             <a
                 class="link-span"
                 style="text-decoration: none"
                 target="_blank"
-                href="https://nageoffer.com"
+                href="https://github.com/lize929"
             >代码仓库</a
             >
             <el-dropdown>

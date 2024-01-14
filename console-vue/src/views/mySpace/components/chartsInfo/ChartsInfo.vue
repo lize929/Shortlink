@@ -105,7 +105,7 @@
                   <div class="top-item" v-for="(item, index) in chinaMapData" :key="item.name">
                     <div v-if="index <= 9" class="key-value">
                       <span>{{ index + 1 + '. ' + item.name }}</span>
-                      <span>{{ item.ratio * 100 }}%</span>
+                      <span>{{ Math.round(item.ratio * 100) }}%</span>
                       <span>{{ item.value }}次</span>
                     </div>
                   </div>
@@ -154,7 +154,7 @@
               <BarChart
                 style="height: 100%; width: 100%"
                 :chartData="{
-                  xAxis: ['周一', '周二', '周三', '周四', '周无', '周六', '周日'],
+                  xAxis: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
                   value: props.info?.weekdayStats || new Array(7).fill(0)
                 }"
               ></BarChart>
@@ -1009,6 +1009,7 @@ watch(
       flex-direction: column;
       flex-wrap: wrap;
       height: 200px;
+      margin-bottom: 2px;
       div {
         height: 40px;
         display: flex;
