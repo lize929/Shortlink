@@ -19,6 +19,11 @@ spring:
       host: localhost
       port: 6379
 
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+
 cors:
   order: -102
 

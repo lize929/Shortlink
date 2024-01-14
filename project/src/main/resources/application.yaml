@@ -8,11 +8,24 @@ spring:
 #      expire: 7
 #    filter:
 #      order: -100
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+      block-page: /api/short-link/v1/blocked
+
   datasource:
     # ShardingSphere 对 Driver 自定义，实现分库分表等隐藏逻辑
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
     # ShardingSphere 配置文件路径
     url: jdbc:shardingsphere:classpath:shardingsphere-config.yaml
+
+  rabbitmq:
+    addresses: localhost
+    username: guest
+    password: guest
+    virtual-host: /
+    address-shuffle-mode:
 
 #  datasource:
 #    username: root
@@ -41,6 +54,11 @@ spring:
     stats:
       locale:
         amap-key: cf0dca5b2324679c55976b2c9c5c3d97
+    channel-topic:
+      short-link-stats: 'short_link:stats-stream'
+      short-link-stats-group: 'short_link:stats-stream:only-group'
+    rabbit:
+      queue: 'short_link:stats'
 
 mybatis-plus:
   configuration:
