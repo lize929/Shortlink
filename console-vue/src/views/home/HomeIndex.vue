@@ -85,6 +85,7 @@ import { ref, getCurrentInstance, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { removeKey, removeUsername, getToken, getUsername } from '@/core/auth.js'
 import { ElMessage } from 'element-plus'
+
 const { proxy } = getCurrentInstance()
 const API = proxy.$API
 // 当当前路径和菜单不匹配时，菜单不会被选中

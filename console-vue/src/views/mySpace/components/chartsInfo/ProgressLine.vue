@@ -6,7 +6,7 @@
         <div class="flex-item">
           <div>
             <img :src="getUrl(item?.browser, item?.os)" width="25" alt="" />
-            <span>{{ item?.browser || item?.os }} {{ item?.ratio * 100 }}%</span>
+            <span>{{ item?.browser || item?.os }} {{ Math.round(item?.ratio * 100) }}%</span>
           </div>
           <div>
             <span>{{ item?.cnt }} 次</span>
@@ -17,7 +17,7 @@
             color="#3464e0"
             :text-inside="true"
             :stroke-width="12"
-            :percentage="item?.ratio * 100"
+            :percentage="Math.round(item?.ratio * 100)"
           />
         </div>
       </div>
