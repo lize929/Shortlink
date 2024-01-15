@@ -74,3 +74,9 @@ goto-domain:
       - zhihu.com
       - juejin.cn
       - cnblogs.com
+
+queue:
+  redis-stream:
+    enable: true
+  rabbitmq:
+    enable: false
