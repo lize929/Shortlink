@@ -88,6 +88,12 @@ public class ShrotLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
     @Value("${spring.short-link.domain.default}")
     private String createShortLinkDefaultDomain;
 
+    @Value("${queue.redis-stream.enable}")
+    private boolean stream_enable;
+
+    @Value("${queue.rabbitmq.enable}")
+    private boolean rabbitmq_enable;
+
     /**
      * 短链接跳转处理
      * @param shortUri
@@ -265,8 +271,12 @@ public class ShrotLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
         producerMap.put("fullShortUrl",fullShortUrl);
         producerMap.put("gid",gid);
         producerMap.put("statsRecord",JSON.toJSONString(statsRecord));
-        rabbitShortLinkStatsSaveProducer.send(producerMap);
-//        shortLinkStatsSaveProducer.send(producerMap);
+        if (stream_enable){
+            shortLinkStatsSaveProducer.send(producerMap);
+        }
+        if (rabbitmq_enable){
+            rabbitShortLinkStatsSaveProducer.send(producerMap);
+        }
     }
 
     /**
