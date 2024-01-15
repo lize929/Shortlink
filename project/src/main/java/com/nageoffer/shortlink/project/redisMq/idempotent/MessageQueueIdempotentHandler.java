@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -27,12 +28,30 @@ public class MessageQueueIdempotentHandler {
     }
 
     /**
+     * 消息消费流程完成后，设置key对应的值为1
+     * @param messageID
+     */
+    public void setAccomplish(String messageID){
+        String key = IDEMPOTENT_KEY_PREFIX + messageID;
+        stringRedisTemplate.opsForValue().set(key, "1", 2,TimeUnit.MINUTES);
+    }
+
+    /**
+     * 判断消息消费流程是否执行完成
+     * @param messageID
+     * @return
+     */
+    public boolean isAccomplish(String messageID){
+        String key = IDEMPOTENT_KEY_PREFIX + messageID;
+        return Objects.equals(stringRedisTemplate.opsForValue().get(key),"1");
+    }
+
+    /**
      * 如果消息处理遇到异常，删除幂等标识
      * @param messageID
      */
     public void delIdempotentKey(String messageID){
         String key = IDEMPOTENT_KEY_PREFIX + messageID;
-        // 如果key不存在，则将其值设为"0"，否则返回true，如果key存在，则返回false
         stringRedisTemplate.delete(key);
     }
 

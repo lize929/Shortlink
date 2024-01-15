@@ -8,6 +8,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.nageoffer.shortlink.project.common.convention.exception.ServiceException;
 import com.nageoffer.shortlink.project.dao.entity.*;
 import com.nageoffer.shortlink.project.dao.mapper.*;
 import com.nageoffer.shortlink.project.dto.biz.ShortLinkStatsRecordDTO;
@@ -64,8 +65,14 @@ public class ShortLinkStatsSaveConsumer implements StreamListener<String, MapRec
         String stream = message.getStream();
         RecordId id = message.getId();
         // 防止一个消息被消费多次
-        if (!messageQueueIdempotentHandler.isMessageProcessed(id.toString())){
-            return;
+        if (!messageQueueIdempotentHandler.isMessageProcessed(id.toString())){// 如果消息被消费过
+            if (messageQueueIdempotentHandler.isAccomplish(id.toString())) // 判断消息消费流程是否走完
+            {
+                // 如果消息消费流程已经走完了，直接return
+                return;
+            }
+            // 如果消息消费流程没有走完，则抛异常，让队列重试
+            throw new ServiceException("消息消费未完成流程，需要消费队列重试");
         }
         try {
             Map<String, String> producerMap = message.getValue();
@@ -81,6 +88,8 @@ public class ShortLinkStatsSaveConsumer implements StreamListener<String, MapRec
             messageQueueIdempotentHandler.delIdempotentKey(id.toString());
             log.error("记录短链接监控消费异常",ex);
         }
+        // 上面流程都走完之后，将值设为"1"，表示消费流程已完成
+        messageQueueIdempotentHandler.setAccomplish(id.toString());
 
     }
 
